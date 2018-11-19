@@ -1,0 +1,14 @@
+.DS_Store
+.settings
+.springBeans
+bin
+*.log
+.*.swp
+.classpath
+*/.projectWW
+.idea
+target
+build
+*.txt
+workspace.xml
+*.iml

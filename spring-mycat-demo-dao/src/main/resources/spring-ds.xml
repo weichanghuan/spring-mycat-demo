@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:util="http://www.springframework.org/schema/util" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <context:property-placeholder ignore-unresolvable="true" location="classpath:db.properties"/>
+
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+          destroy-method="close">
+        <!-- 必须的配置 -->
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="defaultAutoCommit" value="false"/>
+
+        <!-- 可选配置 -->
+        <!-- 连接池启动时创建的初始化连接数量（默认值为0） -->
+        <property name="initialSize" value="${jdbc.initialSize}"/>
+
+        <!-- 连接池中最大的空闲的连接数，超过的空闲连接将被释放，如果设置为负数表示不限制（默认为8个，maxIdle不能设置太小， 因为假如在高负载的情况下，连接的打开时间比关闭的时间快，会引起连接池中idle的个数
+            上升超过maxIdle，而造成频繁的连接销毁和创建，类似于jvm参数中的Xmx设置) -->
+        <property name="maxIdle" value="${jdbc.maxIdle}"/>
+
+        <!-- 连接池中最小的空闲的连接数，低于这个数量会被创建新的连接（默认为0，调整为5，该参数越接近maxIdle，性能越好， 因为连接的创建和销毁，都是需要消耗资源的；
+            但是不能太大，因为在机器很空闲的时候，也会创建低于minidle个数的连接，类似于jvm参数中的Xmn设置） -->
+        <property name="minIdle" value="${jdbc.minIdle}"/>
+
+        <!-- 并发连接的最大数。设置为0则无限制 -->
+        <property name="maxTotal" value="${jdbc.maxTotal}"/>
+
+        <!-- 等待连接的最大连接的时间,以毫秒计 -->
+        <property name="maxWaitMillis" value="${jdbc.maxWaitMillis}"/>
+
+        <!--SQL查询,用来验证从连接池取出的连接,在将连接返回给调用者之前. -->
+       <!-- <property name="validationQuery" value="select sysdate from dual"/>-->
+
+        <!--指明是否在从池中取出连接前进行检验,如果检验失败,则从池中去除连接并尝试取出另一个 -->
+        <property name="testOnBorrow" value="true"/>
+    </bean>
+
+
+   <!-- <bean id="dataSource_write" class="org.apache.commons.dbcp2.BasicDataSource"
+          destroy-method="close">
+        &lt;!&ndash; 必须的配置 &ndash;&gt;
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="${jdbc.write.url}"/>
+        <property name="username" value="${jdbc.write.username}"/>
+        <property name="password" value="${jdbc.write.password}"/>
+        <property name="defaultAutoCommit" value="false"/>
+
+        &lt;!&ndash; 可选配置 &ndash;&gt;
+        &lt;!&ndash; 连接池启动时创建的初始化连接数量（默认值为0） &ndash;&gt;
+        <property name="initialSize" value="${jdbc.initialSize}"/>
+
+        &lt;!&ndash; 连接池中最大的空闲的连接数，超过的空闲连接将被释放，如果设置为负数表示不限制（默认为8个，maxIdle不能设置太小， 因为假如在高负载的情况下，连接的打开时间比关闭的时间快，会引起连接池中idle的个数
+            上升超过maxIdle，而造成频繁的连接销毁和创建，类似于jvm参数中的Xmx设置) &ndash;&gt;
+        <property name="maxIdle" value="${jdbc.maxIdle}"/>
+
+        &lt;!&ndash; 连接池中最小的空闲的连接数，低于这个数量会被创建新的连接（默认为0，调整为5，该参数越接近maxIdle，性能越好， 因为连接的创建和销毁，都是需要消耗资源的；
+            但是不能太大，因为在机器很空闲的时候，也会创建低于minidle个数的连接，类似于jvm参数中的Xmn设置） &ndash;&gt;
+        <property name="minIdle" value="${jdbc.minIdle}"/>
+
+        &lt;!&ndash; 并发连接的最大数。设置为0则无限制 &ndash;&gt;
+        <property name="maxTotal" value="${jdbc.maxTotal}"/>
+
+        &lt;!&ndash; 等待连接的最大连接的时间,以毫秒计 &ndash;&gt;
+        <property name="maxWaitMillis" value="${jdbc.maxWaitMillis}"/>
+
+        &lt;!&ndash;SQL查询,用来验证从连接池取出的连接,在将连接返回给调用者之前. &ndash;&gt;
+        &lt;!&ndash;<property name="validationQuery" value="select sysdate from dual"/>&ndash;&gt;
+
+        &lt;!&ndash;指明是否在从池中取出连接前进行检验,如果检验失败,则从池中去除连接并尝试取出另一个 &ndash;&gt;
+        <property name="testOnBorrow" value="true"/>
+    </bean>
+
+
+    <bean id="dataSource_read" class="org.apache.commons.dbcp2.BasicDataSource"
+          destroy-method="close">
+        &lt;!&ndash; 必须的配置 &ndash;&gt;
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="${jdbc.read.url}"/>
+        <property name="username" value="${jdbc.read.username}"/>
+        <property name="password" value="${jdbc.read.password}"/>
+        <property name="defaultAutoCommit" value="false"/>
+
+        &lt;!&ndash; 可选配置 &ndash;&gt;
+        &lt;!&ndash; 连接池启动时创建的初始化连接数量（默认值为0） &ndash;&gt;
+        <property name="initialSize" value="${jdbc.initialSize}"/>
+
+        &lt;!&ndash; 连接池中最大的空闲的连接数，超过的空闲连接将被释放，如果设置为负数表示不限制（默认为8个，maxIdle不能设置太小， 因为假如在高负载的情况下，连接的打开时间比关闭的时间快，会引起连接池中idle的个数
+            上升超过maxIdle，而造成频繁的连接销毁和创建，类似于jvm参数中的Xmx设置) &ndash;&gt;
+        <property name="maxIdle" value="${jdbc.maxIdle}"/>
+
+        &lt;!&ndash; 连接池中最小的空闲的连接数，低于这个数量会被创建新的连接（默认为0，调整为5，该参数越接近maxIdle，性能越好， 因为连接的创建和销毁，都是需要消耗资源的；
+            但是不能太大，因为在机器很空闲的时候，也会创建低于minidle个数的连接，类似于jvm参数中的Xmn设置） &ndash;&gt;
+        <property name="minIdle" value="${jdbc.minIdle}"/>
+
+        &lt;!&ndash; 并发连接的最大数。设置为0则无限制 &ndash;&gt;
+        <property name="maxTotal" value="${jdbc.maxTotal}"/>
+
+        &lt;!&ndash; 等待连接的最大连接的时间,以毫秒计 &ndash;&gt;
+        <property name="maxWaitMillis" value="${jdbc.maxWaitMillis}"/>
+
+        &lt;!&ndash;SQL查询,用来验证从连接池取出的连接,在将连接返回给调用者之前. &ndash;&gt;
+        &lt;!&ndash;<property name="validationQuery" value="select sysdate from dual"/>&ndash;&gt;
+
+        &lt;!&ndash;指明是否在从池中取出连接前进行检验,如果检验失败,则从池中去除连接并尝试取出另一个 &ndash;&gt;
+        <property name="testOnBorrow" value="true"/>
+    </bean>-->
+
+
+
+</beans>

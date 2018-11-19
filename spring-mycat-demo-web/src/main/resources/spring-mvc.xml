@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+
+
+    <!-- 同时开启json格式的支持 -->
+    <mvc:annotation-driven/>
+
+    <!-- 对静态资源文件的访问 -->
+    <mvc:default-servlet-handler/>
+
+    <!-- spring mvc 扫描所有的controller 但是不扫描service -->
+    <context:component-scan base-package="com.*"/>
+
+    <!-- 设置定时任务 -->
+    <task:annotation-driven/>
+
+
+    <!-- （默认）jsp视图解析器对模型视图名称的解析，即在模型视图名称添加前后缀 -->
+    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+    <!--<property name="prefix" value="/WEB-INF/jsp/"/>-->
+    <!--<property name="suffix" value=".jsp"/>&lt;!&ndash;可为空,方便实现自已的依据扩展名来选择视图解释类的逻辑 &ndash;&gt;-->
+    <!--<property name="order" value="2"/>-->
+    <!--</bean>-->
+
+    <!-- 设置freeMarker的配置文件路径 -->
+    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/WEB-INF/ftl/"/>
+        <property name="freemarkerVariables">
+            <map>
+                <entry key="xml_escape" value-ref="fmXmlEscape"/>
+            </map>
+        </property>
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="defaultEncoding">utf-8</prop>
+                <prop key="output_encoding">utf-8</prop>
+                <prop key="number_format">0.################</prop>
+                <prop key="date_format">yyyy-MM-dd</prop>
+                <prop key="time_format">HH:mm:Ss</prop>
+                <prop key="datetime_format">yyyy-MM-dd HH:mm:Ss</prop>
+                <prop key="auto_import">common/util.ftl as spring</prop>
+                <prop key="classic_compatible">true</prop>
+                <prop key="tag_syntax">auto_detect</prop>
+                <prop key="template_update_delay">2</prop>
+                <prop key="locale">zh_CN</prop>
+                <prop key="boolean_format">true,false</prop>
+                <prop key="whitespace_stripping">true</prop>
+                <prop key="locale">zh_CN</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape"/>
+
+    <!--配置freeMarker视图解析器-->
+    <bean id="freemakerViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
+        <property name="suffix" value=".html"/>
+        <property name="contentType" value="text/html; charset=UTF-8"/>
+        <property name="exposeRequestAttributes" value="true"/>
+        <property name="exposeSessionAttributes" value="true"/>
+        <property name="exposeSpringMacroHelpers" value="true"/>
+        <property name="requestContextAttribute" value="request"/>
+        <property name="allowSessionOverride" value="true"/>
+        <property name="order" value="1"/>
+    </bean>
+
+
+    <!--多部分文件上传 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 设置上传文件的最大尺寸为10MB -->
+        <property name="maxUploadSize" value="1048576000"/>
+        <property name="maxInMemorySize" value="1024"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+
+
+    <!-- Enables swgger ui-->
+    <mvc:resources location="classpath:/META-INF/resources/" mapping="swagger-ui.html"/>
+    <mvc:resources location="classpath:/META-INF/resources/webjars/" mapping="/webjars/**"/>
+
+
+    <!--配置拦截器, 多个拦截器,顺序执行 -->
+    <mvc:interceptors>
+        <bean class="com.spring.demo.web.interceptor.LoginInterceptor"></bean>
+    </mvc:interceptors>
+</beans>

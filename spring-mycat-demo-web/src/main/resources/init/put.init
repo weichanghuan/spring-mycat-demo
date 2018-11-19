@@ -1,0 +1,4 @@
+put /Users/wch/github_space/spring-mycat-demo/spring-mycat-demo-web/target/bd.war /yjdata/www/tomcat/webapps
+
+
+put /Users/wch/github_space/spring-mycat-demo/spring-mycat-demo-web/target/bd.war /var/tomcat/tomcat-8/webapps
