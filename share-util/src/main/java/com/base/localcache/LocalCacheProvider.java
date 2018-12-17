@@ -100,7 +100,7 @@ public class LocalCacheProvider implements CacheProvider {
         if (scheduledExecutorService == null) {
             return;
         }
-        if(!scheduledExecutorService.isShutdown()){
+        if (!scheduledExecutorService.isShutdown()) {
             scheduledExecutorService.shutdown();
         }
     }

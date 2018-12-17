@@ -12,19 +12,19 @@ public class DateTimeFormatterTest {
     public static void main(String[] args) {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
-        String nowStr = now .format(format);
+        String nowStr = now.format(format);
         System.out.println(nowStr);
 
 
         //解析日期
-        String dateStr= "2016年10月25日";
+        String dateStr = "2016年10月25日";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy年MM月dd日");
-        LocalDate date= LocalDate.parse(dateStr, formatter);
+        LocalDate date = LocalDate.parse(dateStr, formatter);
 
         //日期转换为字符串
         LocalDateTime now1 = LocalDateTime.now();
         DateTimeFormatter format1 = DateTimeFormatter.ofPattern("yyyy年MM月dd日 hh:mm a");
-        String nowStr1 = now .format(format1);
+        String nowStr1 = now.format(format1);
         System.out.println(nowStr);
 
         //ThreadLocal来限制SimpleDateFormat

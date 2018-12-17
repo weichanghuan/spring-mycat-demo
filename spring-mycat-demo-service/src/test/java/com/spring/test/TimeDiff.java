@@ -27,14 +27,14 @@ public class TimeDiff {
         long min = diff % nd % nh / nm;
         // 计算差多少秒//输出结果
         // long sec = diff % nd % nh % nm / ns;
-        if (day == 0 &&hour == 0 && min==0 ) {
+        if (day == 0 && hour == 0 && min == 0) {
             return "一分钟内";
         }
-        if (day == 0 &&hour == 0) {
-            return   min + "分钟前";
+        if (day == 0 && hour == 0) {
+            return min + "分钟前";
         }
-        if (day == 0 ) {
-            return   hour + "小时"+ min + "分钟前";
+        if (day == 0) {
+            return hour + "小时" + min + "分钟前";
         }
 
         return day + "天" + hour + "小时" + min + "分钟前";

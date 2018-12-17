@@ -13,7 +13,7 @@ html, body {
 #cake {
     display: block;
     position: relative;
-    left:50%;
+    left: 50%;
     margin-top: -10em;
     margin-bottom: 0;
     margin-left: -100px;
@@ -182,8 +182,8 @@ html, body {
 
 .bg-bubbles {
     position: absolute;
-    margin:0;
-    padding:0;
+    margin: 0;
+    padding: 0;
     top: 0;
     left: 0;
     width: 100%;
@@ -308,7 +308,7 @@ html, body {
 
 .happy {
     position: absolute;
-    opacity:0;
+    opacity: 0;
     width: 230px;
     height: 137px;
     overflow: hidden;
@@ -364,21 +364,23 @@ html, body {
 }
 
 .button-style1 {
-	position:absolute;
-	top:50%;
+    position: absolute;
+    top: 50%;
     left: 50%;
-    margin-left:-87px;
-    opacity:0;
+    margin-left: -87px;
+    opacity: 0;
 }
+
 .button-style2 {
-	position:absolute;
-    top:60%;
-    margin-left:-87px;
+    position: absolute;
+    top: 60%;
+    margin-left: -87px;
     left: 50%;
-    opacity:0;
+    opacity: 0;
 
 }
-.name{
+
+.name {
     font-weight: bold;
     position: absolute;
     text-align: center;
@@ -389,63 +391,64 @@ html, body {
     font-size: 32px;
     color: #fff;
 }
+
 @keyframes btn1 {
     0% {
         opacity: 0;
-        top:60%;
+        top: 60%;
     }
     70% {
         opacity: 0;
-        top:60%;
+        top: 60%;
     }
     100% {
         opacity: 1;
-        top:70%;
+        top: 70%;
     }
 }
 
 @-webkit-keyframes btn1 {
     0% {
         opacity: 0;
-        top:60%;
+        top: 60%;
     }
     70% {
         opacity: 0;
-        top:60%;
+        top: 60%;
     }
     100% {
         opacity: 1;
-        top:70%;
+        top: 70%;
     }
 }
 
 @keyframes btn2 {
     0% {
         opacity: 0;
-        top:60%;
+        top: 60%;
     }
     70% {
         opacity: 0;
-        top:70%;
+        top: 70%;
     }
     100% {
         opacity: 1;
-        top:85%;
+        top: 85%;
     }
 }
 
 @-webkit-keyframes btn2 {
     0% {
         opacity: 0;
-        top:60%;
+        top: 60%;
     }
     70% {
         opacity: 0;
-        top:70%;
+        top: 70%;
     }
     100% {
         opacity: 1;
-        top:85%;
+        top: 85%;
     }
 }
 

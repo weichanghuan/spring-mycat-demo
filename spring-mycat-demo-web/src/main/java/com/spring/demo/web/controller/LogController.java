@@ -26,9 +26,9 @@ public class LogController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
-    private static final String[] codes={"10520","11520","12520","13520","14520","15520","16520","17520","18520","19520"};
+    private static final String[] codes = {"10520", "11520", "12520", "13520", "14520", "15520", "16520", "17520", "18520", "19520"};
 
-    private  static final String[] mobiles={"17621053900"};
+    private static final String[] mobiles = {"17621053900"};
 
     @Autowired
     private LogService logService;
@@ -65,22 +65,22 @@ public class LogController {
      * @param code
      * @return
      */
-    @RequestMapping(value = "/code.htm", method = RequestMethod.GET,produces = "text/html; charset=utf-8")
+    @RequestMapping(value = "/code.htm", method = RequestMethod.GET, produces = "text/html; charset=utf-8")
     @ResponseBody
     public String code(String mobile) {
         logger.info("进入发送短信控制器");
-        Map<String,String> map=new HashMap<>();
-        if(null==mobile ||mobile.equals("")){
-            map.put("result","请输入有效手机号(该系统,只限代安娜童鞋)");
+        Map<String, String> map = new HashMap<>();
+        if (null == mobile || mobile.equals("")) {
+            map.put("result", "请输入有效手机号(该系统,只限代安娜童鞋)");
             return JSONUtil.toJSonString(map);
         }
 
-        if(mobile.equals(mobiles[0])||mobile.equals(mobiles[1])){
+        if (mobile.equals(mobiles[0]) || mobile.equals(mobiles[1])) {
             Random r = new Random();
             int i = r.nextInt(10);
             try {
-                SmsDemo.sendSms(mobile,codes[i]);
-                map.put("result","已发送，请查收(只限代安娜童鞋),下一步的账号：anna，密码：anna");
+                SmsDemo.sendSms(mobile, codes[i]);
+                map.put("result", "已发送，请查收(只限代安娜童鞋),下一步的账号：anna，密码：anna");
                 return JSONUtil.toJSonString(map);
             } catch (ClientException e) {
                 logger.error(e.getMessage());
@@ -88,7 +88,7 @@ public class LogController {
             }
         }
 
-        map.put("result","手机号有误，(该系统只限代安娜童鞋玩耍)");
+        map.put("result", "手机号有误，(该系统只限代安娜童鞋玩耍)");
         return JSONUtil.toJSonString(map);
     }
 
@@ -103,18 +103,18 @@ public class LogController {
     @ResponseBody
     public String mobile(HttpServletRequest httpServletRequest) {
         logger.info("进入首页控制器");
-        Map<String,String> map=new HashMap<>();
+        Map<String, String> map = new HashMap<>();
         String mobile = httpServletRequest.getParameter("mobile");
         String code = httpServletRequest.getParameter("code");
-        if(mobiles[0].equals(mobile) || mobiles[1].equals(mobile)){
-            for (int i=0;i<codes.length;i++){
-                if(codes[i].equals(code)){
-                    map.put("result","1");
+        if (mobiles[0].equals(mobile) || mobiles[1].equals(mobile)) {
+            for (int i = 0; i < codes.length; i++) {
+                if (codes[i].equals(code)) {
+                    map.put("result", "1");
                     return JSONUtil.toJSonString(map);
                 }
             }
         }
-        map.put("result","0");
+        map.put("result", "0");
         return JSONUtil.toJSonString(map);
     }
 
@@ -137,28 +137,28 @@ public class LogController {
      * @param log
      * @return
      */
-    @RequestMapping(value = "/login.htm", method = RequestMethod.GET,produces = "text/html; charset=utf-8")
+    @RequestMapping(value = "/login.htm", method = RequestMethod.GET, produces = "text/html; charset=utf-8")
     @ResponseBody
     public String login(String name, String pwd, HttpServletResponse response) {
         logger.info("进入登陆控制器");
-        Map<String,String> map=new HashMap<>();
-        Log log=new Log();
+        Map<String, String> map = new HashMap<>();
+        Log log = new Log();
         log.setCreated(new Date());
         log.setName(name);
         log.setPwd(pwd);
 
 
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        if("anna".equals(name) && "anna".equals(pwd)){
-                map.put("result","1");
-                log.setSuccess("1");
-                logService.insertSelective(log);
-                CookieUtil.setCookie(1, "name", name, 3600, "/", response);
-                CookieUtil.setCookie(1, "pwd", pwd, 3600, "/", response);
-                return JSONUtil.toJSonString(map);
+        if ("anna".equals(name) && "anna".equals(pwd)) {
+            map.put("result", "1");
+            log.setSuccess("1");
+            logService.insertSelective(log);
+            CookieUtil.setCookie(1, "name", name, 3600, "/", response);
+            CookieUtil.setCookie(1, "pwd", pwd, 3600, "/", response);
+            return JSONUtil.toJSonString(map);
 
         }
-        map.put("result","该系统仅限代安娜童鞋玩耍");
+        map.put("result", "该系统仅限代安娜童鞋玩耍");
         log.setSuccess("0");
         logService.insertSelective(log);
         return JSONUtil.toJSonString(map);
@@ -175,7 +175,7 @@ public class LogController {
         logger.info("进入蛋糕页面");
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         //if(date.equals("2018-11-02")){
-            return "BirthdayCake";
+        return "BirthdayCake";
         //}
     }
 
@@ -190,7 +190,7 @@ public class LogController {
     public String img(HttpServletRequest httpServletRequest) {
         logger.info("进入img页面");
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-            return "img";
+        return "img";
     }
 
 
@@ -204,7 +204,7 @@ public class LogController {
     public String memories(HttpServletRequest httpServletRequest) {
         logger.info("进入memories页面");
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-            return "Memories";
+        return "Memories";
     }
 
 }

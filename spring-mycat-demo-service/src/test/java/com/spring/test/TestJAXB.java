@@ -32,9 +32,9 @@ public class TestJAXB {
         marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
         //是否省略xml头信息，默认不省略（false）
         marshaller.setProperty(Marshaller.JAXB_FRAGMENT, false);
-        StringWriter sw=new StringWriter();
+        StringWriter sw = new StringWriter();
         marshaller.marshal(user, sw);
-        StringBuffer sb=new StringBuffer();
+        StringBuffer sb = new StringBuffer();
         sb.append(sw.toString());
         System.out.println(sb);
 

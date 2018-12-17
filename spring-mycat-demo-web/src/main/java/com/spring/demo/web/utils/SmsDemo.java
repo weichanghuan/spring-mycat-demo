@@ -20,7 +20,7 @@ import java.util.Date;
  * 工程依赖了2个jar包(存放在工程的libs目录下)
  * 1:aliyun-java-sdk-core.jar
  * 2:aliyun-java-sdk-dysmsapi.jar
- *
+ * <p>
  * 备注:Demo工程编码采用UTF-8
  * 国际短信发送请勿参照此DEMO
  */
@@ -32,14 +32,14 @@ public class SmsDemo {
     static final String domain = "dysmsapi.aliyuncs.com";
 
     // TODO 此处需要替换成开发者自己的AK(在阿里云访问控制台寻找)
-   // static final String accessKeyId = "yourAccessKeyId";
-   // static final String accessKeySecret = "yourAccessKeySecret";
+    // static final String accessKeyId = "yourAccessKeyId";
+    // static final String accessKeySecret = "yourAccessKeySecret";
 
     static final String accessKeyId = "LTAIcQsUFmG7jiqf";
     static final String accessKeySecret = "hC6RTmdaDgBfuklU5LQ6pvTo4kNJCM";
 
 
-    public static SendSmsResponse sendSms(String mobile,String code) throws ClientException {
+    public static SendSmsResponse sendSms(String mobile, String code) throws ClientException {
 
         //可自助调整超时时间
         System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
@@ -59,8 +59,8 @@ public class SmsDemo {
         //必填:短信模板-可在短信控制台中找到
         request.setTemplateCode("SMS_148593219");
         //可选:模板中的变量替换JSON串,如模板内容为"亲爱的${name},您的验证码为${code}"时,此处的值为
-        String date=new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        request.setTemplateParam("{\"code\":\""+code+"\"}");
+        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        request.setTemplateParam("{\"code\":\"" + code + "\"}");
         //request.setTemplateParam("{\"name\":\"代安娜\"}");
 
         //选填-上行短信扩展码(无特殊需求用户请忽略此字段)
@@ -144,7 +144,7 @@ public class SmsDemo {
     public static void main(String[] args) throws ClientException, InterruptedException {
 
         //发短信
-        SendSmsResponse response = sendSms("17621053900","111");
+        SendSmsResponse response = sendSms("17621053900", "111");
         System.out.println("短信接口返回的数据----------------");
         System.out.println("Code=" + response.getCode());
         System.out.println("Message=" + response.getMessage());
@@ -154,15 +154,14 @@ public class SmsDemo {
         Thread.sleep(3000L);
 
         //查明细
-        if(response.getCode() != null && response.getCode().equals("OK")) {
+        if (response.getCode() != null && response.getCode().equals("OK")) {
             QuerySendDetailsResponse querySendDetailsResponse = querySendDetails(response.getBizId());
             System.out.println("短信明细查询接口返回数据----------------");
             System.out.println("Code=" + querySendDetailsResponse.getCode());
             System.out.println("Message=" + querySendDetailsResponse.getMessage());
             int i = 0;
-            for(QuerySendDetailsResponse.SmsSendDetailDTO smsSendDetailDTO : querySendDetailsResponse.getSmsSendDetailDTOs())
-            {
-                System.out.println("SmsSendDetailDTO["+i+"]:");
+            for (QuerySendDetailsResponse.SmsSendDetailDTO smsSendDetailDTO : querySendDetailsResponse.getSmsSendDetailDTOs()) {
+                System.out.println("SmsSendDetailDTO[" + i + "]:");
                 System.out.println("Content=" + smsSendDetailDTO.getContent());
                 System.out.println("ErrCode=" + smsSendDetailDTO.getErrCode());
                 System.out.println("OutId=" + smsSendDetailDTO.getOutId());

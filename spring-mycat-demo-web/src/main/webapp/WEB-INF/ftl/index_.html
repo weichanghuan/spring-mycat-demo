@@ -1,108 +1,78 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-	<link href="img/icon.ico" rel="icon" type="image/x-icon">
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Anna exclusive site
+    <link href="img/icon.ico" rel="icon" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anna exclusive site
 
-	</title>
-	<link rel="stylesheet" type="text/css" href="css/styles.css">
+    </title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
 
-	<link rel="stylesheet" type="text/css" href="css/layui.css">
-	<link rel="stylesheet" type="text/css" href="js/css/modules/layer/default/layer.css">
+    <link rel="stylesheet" type="text/css" href="css/layui.css">
+    <link rel="stylesheet" type="text/css" href="js/css/modules/layer/default/layer.css">
 
 
 </head>
 <body>
 <div class="htmleaf-container">
-	<div class="wrapper">
-		<div class="container">
-			<h1>Anna's exclusive site</h1>
-			<form class="form" action="mobile.htm" method="post" onsubmit="return CheckForm()">
-				<input id="mobile" class="input" name="Mobile" type="text" placeholder="Mobile">
-				<input id="code" class="input" name="code" type="text" placeholder="Mobile verification code">
-				<button  id="lb"  type="button">Go!</button>
-			</form>
-			<br/>
-			<button id="sendCode" class="button">send code</button>
-		</div>
+    <div class="wrapper">
+        <div class="container">
+            <h1>Anna's exclusive site</h1>
+            <form class="form" action="mobile.htm" method="post" onsubmit="return CheckForm()">
+                <input id="mobile" class="input" name="Mobile" type="text" placeholder="Mobile">
+                <input id="code" class="input" name="code" type="text" placeholder="Mobile verification code">
+                <button id="lb" type="button">Go!</button>
+            </form>
+            <br/>
+            <button id="sendCode" class="button">send code</button>
+        </div>
 
 
-		<!--<ul class="bg-bubbles">-->
-		<!--<li></li>-->
-		<!--<li></li>-->
-		<!--<li></li>-->
-		<!--<li></li>-->
-		<!--<li></li>-->
-		<!--<li></li>-->
-		<!--<li></li>-->
-		<!--<li></li>-->
-		<!--<li></li>-->
-		<!--<li></li>-->
-		<!--</ul>-->
-	</div>
+        <!--<ul class="bg-bubbles">-->
+        <!--<li></li>-->
+        <!--<li></li>-->
+        <!--<li></li>-->
+        <!--<li></li>-->
+        <!--<li></li>-->
+        <!--<li></li>-->
+        <!--<li></li>-->
+        <!--<li></li>-->
+        <!--<li></li>-->
+        <!--<li></li>-->
+        <!--</ul>-->
+    </div>
 </div>
 
 <script src="js/jquery-2.1.1.min.js" type="text/javascript"></script>
 <script src="js/jquery-1.8.4.min.js" type="text/javascript"></script>
-<script src="js/layui.js" ></script>
-<script src="js/lay/modules/layer.js" ></script>
+<script src="js/layui.js"></script>
+<script src="js/lay/modules/layer.js"></script>
 <embed src="music/3.mp3" hidden="true" autostart="true" loop="-1">
 <script type="text/javascript">
 
-    function CheckForm(){
+    function CheckForm() {
 
 
-        return false;}
+        return false;
+    }
 
     //发送验证码
-    $('#sendCode').click(function(){
-        var mobile=$('#mobile').val();
+    $('#sendCode').click(function () {
+        var mobile = $('#mobile').val();
 
-        if(mobile==null || mobile==""){
+        if (mobile == null || mobile == "") {
             layer.msg("请输入手机号（系统仅限于代安娜童鞋玩耍）");
-		}else{
+        } else {
             $.ajax({
-                type : 'Get',
-                url : 'code.htm?mobile='+mobile,
-                dataType:'json',
-                contentType:'application/json;charset=UTF-8',
-                success : function(data) {
+                type: 'Get',
+                url: 'code.htm?mobile=' + mobile,
+                dataType: 'json',
+                contentType: 'application/json;charset=UTF-8',
+                success: function (data) {
 
                     layer.msg(data.result);
-
-
-                }
-            })
-		}
-    })
-
-
-    //验证验证码
-    $('#lb').click(function(){
-        var mobile=$('#mobile').val();
-        var code=$('#code').val();
-
-
-
-        if(mobile==null || mobile=="" || code==null || code==""){
-            layer.msg("请输入手机号或者验证码（系统仅限于代安娜童鞋玩耍）");
-        }else{
-            $.ajax({
-                type : 'Get',
-                url : 'mobile.htm?mobile='+mobile+"&code="+code,
-                dataType:'json',
-                contentType:'application/json;charset=UTF-8',
-                success : function(data) {
-						if(data.result==1){
-                            layer.msg("手机验证通过");
-                            setTimeout("window.location.href='index2.htm'",1200);
-						}else{
-                            layer.msg("验证有误，(该系统只限代安娜童鞋玩耍)");
-						}
-
 
 
                 }
@@ -110,6 +80,34 @@
         }
     })
 
+
+    //验证验证码
+    $('#lb').click(function () {
+        var mobile = $('#mobile').val();
+        var code = $('#code').val();
+
+
+        if (mobile == null || mobile == "" || code == null || code == "") {
+            layer.msg("请输入手机号或者验证码（系统仅限于代安娜童鞋玩耍）");
+        } else {
+            $.ajax({
+                type: 'Get',
+                url: 'mobile.htm?mobile=' + mobile + "&code=" + code,
+                dataType: 'json',
+                contentType: 'application/json;charset=UTF-8',
+                success: function (data) {
+                    if (data.result == 1) {
+                        layer.msg("手机验证通过");
+                        setTimeout("window.location.href='index2.htm'", 1200);
+                    } else {
+                        layer.msg("验证有误，(该系统只限代安娜童鞋玩耍)");
+                    }
+
+
+                }
+            })
+        }
+    })
 
 
 </script>

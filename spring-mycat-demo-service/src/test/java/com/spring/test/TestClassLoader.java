@@ -12,7 +12,7 @@ import java.util.Properties;
 
 public class TestClassLoader {
 
-    private  Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public void testClassLoader() {
         logger.info("initClient memcached");
@@ -39,15 +39,14 @@ public class TestClassLoader {
         }
         String addresses = config.getProperty("addresses");
         String channel = config.getProperty("channel");
-        logger.info("addresses={},channel={}",addresses,channel);
+        logger.info("addresses={},channel={}", addresses, channel);
     }
 
 
     public static void main(String[] args) {
-        TestClassLoader testClassLoader=new TestClassLoader();
+        TestClassLoader testClassLoader = new TestClassLoader();
         testClassLoader.testClassLoader();
     }
-
 
 
 }

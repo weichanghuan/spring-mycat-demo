@@ -1,68 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
     <aop:aspectj-autoproxy/>
 
-	<!-- 如果存在一个事务，则支持当前事务。如果没有事务则开启 -->
-	<bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
-		<property name="transactionManager" ref="transactionManager" />
-	</bean>
+    <!-- 如果存在一个事务，则支持当前事务。如果没有事务则开启 -->
+    <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+        <property name="transactionManager" ref="transactionManager"/>
+    </bean>
 
 
-	<!-- 定义AOP切面处理器 -->
-	<!--<bean class="com.spring.demo.aspect.DataSourceAspect" id="dataSourceAspect" />-->
+    <!-- 定义AOP切面处理器 -->
+    <!--<bean class="com.spring.demo.aspect.DataSourceAspect" id="dataSourceAspect" />-->
 
-	<!-- 以AspectJ方式 定义 事务 -->
-	<aop:config proxy-target-class="true" >
-		<!--pointcut元素定义一个切入点，execution中的第一个星号 用以匹配方法的返回类型， 这里星号表明匹配所有返回类型。 com.lxg.service.*.*(..)表明匹配com.lxg.service包下的所有类的所有 方法 -->
-		<!--<aop:pointcut id="myPointcut" expression="execution(* com.spring.demo.service..*.*(..))" />-->
+    <!-- 以AspectJ方式 定义 事务 -->
+    <aop:config proxy-target-class="true">
+        <!--pointcut元素定义一个切入点，execution中的第一个星号 用以匹配方法的返回类型， 这里星号表明匹配所有返回类型。 com.lxg.service.*.*(..)表明匹配com.lxg.service包下的所有类的所有 方法 -->
+        <!--<aop:pointcut id="myPointcut" expression="execution(* com.spring.demo.service..*.*(..))" />-->
 
-		<aop:advisor pointcut="execution(* com.spring.demo.service..*.*(..))"
-			advice-ref="txAdvice" order="2"/>
-		<!-- 将切面应用到自定义的切面处理器上，-9999保证该切面优先级最高执行 -->
-		<!--<aop:aspect ref="dataSourceAspect" order="-9999">-->
-			<!--<aop:before method="before" pointcut-ref="myPointcut" />-->
-		<!--</aop:aspect>-->
-	</aop:config>
+        <aop:advisor pointcut="execution(* com.spring.demo.service..*.*(..))"
+                     advice-ref="txAdvice" order="2"/>
+        <!-- 将切面应用到自定义的切面处理器上，-9999保证该切面优先级最高执行 -->
+        <!--<aop:aspect ref="dataSourceAspect" order="-9999">-->
+        <!--<aop:before method="before" pointcut-ref="myPointcut" />-->
+        <!--</aop:aspect>-->
+    </aop:config>
 
-	<!-- 配置事务传播特性:如果存在一个事务，则支持当前事务。如果没有事务则开启：REQUIRED -->
-	<tx:advice id="txAdvice" transaction-manager="transactionManager">
-		<tx:attributes>
-			<tx:method name="add*" propagation="REQUIRED" rollback-for="Exception" />
-			<tx:method name="update*" propagation="REQUIRED" rollback-for="Exception" />
-			<tx:method name="save*" propagation="REQUIRED" rollback-for="Exception" />
-			<tx:method name="delete*" propagation="REQUIRED" rollback-for="Exception" />
-			<tx:method name="exec*" propagation="REQUIRED" rollback-for="Exception" />
-			<tx:method name="insert*" propagation="REQUIRED" rollback-for="Exception" />
-			<tx:method name="merge*" propagation="REQUIRED" rollback-for="Exception" />
-			<tx:method name="batch*" propagation="REQUIRED" rollback-for="Exception" />
+    <!-- 配置事务传播特性:如果存在一个事务，则支持当前事务。如果没有事务则开启：REQUIRED -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="add*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="update*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="save*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="delete*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="exec*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="insert*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="merge*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="batch*" propagation="REQUIRED" rollback-for="Exception"/>
 
-			<tx:method name="add*Atom" propagation="REQUIRES_NEW" rollback-for="Exception" />
-			<tx:method name="update*Atom" propagation="REQUIRES_NEW" rollback-for="Exception" />
-			<tx:method name="save*Atom" propagation="REQUIRES_NEW" rollback-for="Exception" />
-			<tx:method name="delete*Atom" propagation="REQUIRES_NEW" rollback-for="Exception" />
-			<tx:method name="*Atom" propagation="REQUIRES_NEW" rollback-for="Exception" />
+            <tx:method name="add*Atom" propagation="REQUIRES_NEW" rollback-for="Exception"/>
+            <tx:method name="update*Atom" propagation="REQUIRES_NEW" rollback-for="Exception"/>
+            <tx:method name="save*Atom" propagation="REQUIRES_NEW" rollback-for="Exception"/>
+            <tx:method name="delete*Atom" propagation="REQUIRES_NEW" rollback-for="Exception"/>
+            <tx:method name="*Atom" propagation="REQUIRES_NEW" rollback-for="Exception"/>
 
-			<tx:method name="get*" propagation="SUPPORTS" rollback-for="Exception" />
-			<tx:method name="count*" propagation="SUPPORTS" rollback-for="Exception" />
-			<tx:method name="*" propagation="SUPPORTS" read-only="true" /> 
-		</tx:attributes>
-	</tx:advice>
+            <tx:method name="get*" propagation="SUPPORTS" rollback-for="Exception"/>
+            <tx:method name="count*" propagation="SUPPORTS" rollback-for="Exception"/>
+            <tx:method name="*" propagation="SUPPORTS" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
 
-	<!--<bean id="dataSource" class="com.spring.demo.aspect.DynamicDataSource">-->
-		<!--&lt;!&ndash; 通过key-value的形式来关联数据源 &ndash;&gt;-->
-		<!--<property name="targetDataSources">-->
-			<!--<map>-->
-				<!--<entry value-ref="dataSource_write" key="Write"></entry>-->
-				<!--<entry value-ref="dataSource_read" key="Read"></entry>-->
-			<!--</map>-->
-		<!--</property>-->
-		<!--<property name="defaultTargetDataSource" ref="dataSource_write" />-->
-	<!--</bean>-->
-	
+    <!--<bean id="dataSource" class="com.spring.demo.aspect.DynamicDataSource">-->
+    <!--&lt;!&ndash; 通过key-value的形式来关联数据源 &ndash;&gt;-->
+    <!--<property name="targetDataSources">-->
+    <!--<map>-->
+    <!--<entry value-ref="dataSource_write" key="Write"></entry>-->
+    <!--<entry value-ref="dataSource_read" key="Read"></entry>-->
+    <!--</map>-->
+    <!--</property>-->
+    <!--<property name="defaultTargetDataSource" ref="dataSource_write" />-->
+    <!--</bean>-->
+
 </beans>

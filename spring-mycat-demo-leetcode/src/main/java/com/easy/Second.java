@@ -34,10 +34,10 @@ public class Second {
         int count = getCount(l);
         //判断循环次数
         int i = count / 2;
-        for (int m = 1; m <=i; ) {
+        for (int m = 1; m <= i; ) {
             long first = getInt(m, l);
             long second = getInt(count, l);
-            if ( first== second) {
+            if (first == second) {
                 m++;
                 count--;
                 continue;

@@ -11,7 +11,7 @@ import java.util.List;
 public class ColletctionsTest {
 
     public static void main(String[] args) {
-        List<String> list=new ArrayList<String>();
+        List<String> list = new ArrayList<String>();
 
 
         list.add("3");
@@ -25,7 +25,6 @@ public class ColletctionsTest {
                 return 0;
             }
         });
-
 
 
         Collections.sort(list);

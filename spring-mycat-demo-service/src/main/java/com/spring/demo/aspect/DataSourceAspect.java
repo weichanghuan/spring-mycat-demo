@@ -8,7 +8,9 @@ import org.aspectj.lang.JoinPoint;
  */
 public class DataSourceAspect {
 
-    /** * 在进入Service方法之前执行 * * @param point 切面对象 */
+    /**
+     * 在进入Service方法之前执行 * * @param point 切面对象
+     */
     public void before(JoinPoint point) {
         // 获取到当前执行的方法名
         String methodName = point.getSignature().getName();
@@ -21,9 +23,11 @@ public class DataSourceAspect {
         }
     }
 
-    /** * 判断是否为读库 * * @param methodName * @return */
+    /**
+     * 判断是否为读库 * * @param methodName * @return
+     */
     private Boolean isSlave(String methodName) {
         // 方法名以query、find、get开头的方法名走从库
-        return  methodName.contains( "select");
+        return methodName.contains("select");
     }
 }

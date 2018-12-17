@@ -15,14 +15,14 @@ public class SmsTask {
 
     //每分钟都执行
     @Scheduled(cron = "00 00 8 2 11 ?")
-    public void test()throws Exception{
+    public void test() throws Exception {
         logger.info("执行定时任务");
         SmsDemo.sendSmsTask("");
     }
 
     //每分钟都执行
     @Scheduled(cron = "0 58 18 1 11 ? ")
-    public void test1(){
+    public void test1() {
         logger.info("执行定时任务");
         System.out.println("执行");
     }

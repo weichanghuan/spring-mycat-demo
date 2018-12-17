@@ -12,142 +12,140 @@ import java.util.zip.InflaterInputStream;
 
 /**
  * 压缩工具类。
- * 
- *
  */
 public class ZipUtil {
-	public static byte[] zipBytes(byte[] data) {
-		return zipBytes(data, 0, data.length);
-	}
-	
-	public static byte[] zipBytes(byte[] data, int offset, int len) {
-		try {
-			ByteArrayOutputStream bout = new ByteArrayOutputStream();
-			DeflaterOutputStream dout = new DeflaterOutputStream(bout);
-			dout.write(data, offset, len);
-			dout.finish();
-			dout.close();
-			return bout.toByteArray();
-		} catch (IOException e) {
-			throw new RuntimeException(e.getMessage(), e);
-		}
-	}
-	
-	public static byte[] unzipBytes(byte[] data, int offset, int len) {
-		try {
-			List<byte[]> udataList = new ArrayList<byte[]>();
-			List<Integer> udataLenList = new ArrayList<Integer>();
-			int udataLen = 0;
+    public static byte[] zipBytes(byte[] data) {
+        return zipBytes(data, 0, data.length);
+    }
 
-			ByteArrayInputStream bin = new ByteArrayInputStream(data, offset, len);
-			InflaterInputStream iin = new InflaterInputStream(bin);
+    public static byte[] zipBytes(byte[] data, int offset, int len) {
+        try {
+            ByteArrayOutputStream bout = new ByteArrayOutputStream();
+            DeflaterOutputStream dout = new DeflaterOutputStream(bout);
+            dout.write(data, offset, len);
+            dout.finish();
+            dout.close();
+            return bout.toByteArray();
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
 
-			while (iin.available() == 1) {
-				byte[] udata = new byte[1024];
-				int i = iin.read(udata);
-				if (i <= 0) {
-					break;
-				}
+    public static byte[] unzipBytes(byte[] data, int offset, int len) {
+        try {
+            List<byte[]> udataList = new ArrayList<byte[]>();
+            List<Integer> udataLenList = new ArrayList<Integer>();
+            int udataLen = 0;
 
-				udataList.add(udata);
-				udataLenList.add(i);
-				udataLen += i;
-			}
+            ByteArrayInputStream bin = new ByteArrayInputStream(data, offset, len);
+            InflaterInputStream iin = new InflaterInputStream(bin);
 
-			byte[] udata = new byte[udataLen];
-			int idx = 0;
-			Iterator<Integer> it = udataLenList.iterator();
-			for (byte[] ud : udataList) {
-				int size = it.next();
-				System.arraycopy(ud, 0, udata, idx, size);
-				idx += size;
-				udataLen -= size;
-			}
+            while (iin.available() == 1) {
+                byte[] udata = new byte[1024];
+                int i = iin.read(udata);
+                if (i <= 0) {
+                    break;
+                }
 
-			return udata;
-		} catch (IOException e) {
-			throw new RuntimeException(e.getMessage(), e);
-		}
-	}
+                udataList.add(udata);
+                udataLenList.add(i);
+                udataLen += i;
+            }
 
-	public static byte[] unzipBytes(byte[] data) {
-		return unzipBytes(data, 0, data.length);
-	}
+            byte[] udata = new byte[udataLen];
+            int idx = 0;
+            Iterator<Integer> it = udataLenList.iterator();
+            for (byte[] ud : udataList) {
+                int size = it.next();
+                System.arraycopy(ud, 0, udata, idx, size);
+                idx += size;
+                udataLen -= size;
+            }
 
-	public static void zipFile(File tgtFile, String dir, String[] files) {
-		StringBuffer sb = new StringBuffer();
-		sb.append("jar cfM ");
-		sb.append(tgtFile.getPath());
-		for (String file : files) {
-			sb.append(" -C ");
-			sb.append(dir != null ? dir : ".");
-			sb.append(" ");
-			sb.append(file);
-			sb.append(" ");
-		}
+            return udata;
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
 
-		int exitCode;
-		try {
-			Process proc = Runtime.getRuntime().exec(sb.toString());
-			exitCode = proc.waitFor();
-		} catch (Exception e) {
-			throw new RuntimeException(e.getMessage(), e);
-		}
+    public static byte[] unzipBytes(byte[] data) {
+        return unzipBytes(data, 0, data.length);
+    }
 
-		if (exitCode != 0) {
-			throw new RuntimeException("Zip file meet error, exitCode=[" + exitCode + "].");
-		}
-	}
+    public static void zipFile(File tgtFile, String dir, String[] files) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("jar cfM ");
+        sb.append(tgtFile.getPath());
+        for (String file : files) {
+            sb.append(" -C ");
+            sb.append(dir != null ? dir : ".");
+            sb.append(" ");
+            sb.append(file);
+            sb.append(" ");
+        }
 
-	public static File zipFile(File file) {
-		File tgtFile = new File(FileUtil.changeFileNameExtension(file.getPath(), "zip"));
-		zipFile(tgtFile, file.getParent(), new String[] { file.getName() });
+        int exitCode;
+        try {
+            Process proc = Runtime.getRuntime().exec(sb.toString());
+            exitCode = proc.waitFor();
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
 
-		return tgtFile;
-	}
+        if (exitCode != 0) {
+            throw new RuntimeException("Zip file meet error, exitCode=[" + exitCode + "].");
+        }
+    }
 
-	public static File[] unzipFile(File zipFile, String dir, String[] files) {
-		File fDir = new File(dir != null ? dir : ".");
-		if (fDir.exists() == false) {
-			fDir.mkdirs();
-		}
+    public static File zipFile(File file) {
+        File tgtFile = new File(FileUtil.changeFileNameExtension(file.getPath(), "zip"));
+        zipFile(tgtFile, file.getParent(), new String[]{file.getName()});
 
-		StringBuffer sb = new StringBuffer();
-		sb.append("jar xf ");
-		sb.append(zipFile.getPath());
-		sb.append(" ");
-		for (String file : files) {
-			sb.append(file);
-			sb.append(" ");
-		}
+        return tgtFile;
+    }
 
-		int exitCode;
-		try {
-			Process proc = Runtime.getRuntime().exec(sb.toString(), null, fDir);
-			exitCode = proc.waitFor();
-		} catch (Exception e) {
-			throw new RuntimeException(e.getMessage(), e);
-		}
+    public static File[] unzipFile(File zipFile, String dir, String[] files) {
+        File fDir = new File(dir != null ? dir : ".");
+        if (fDir.exists() == false) {
+            fDir.mkdirs();
+        }
 
-		if (exitCode != 0) {
-			throw new RuntimeException("Unzip file meet error, exitCode=[" + exitCode + "].");
-		}
+        StringBuffer sb = new StringBuffer();
+        sb.append("jar xf ");
+        sb.append(zipFile.getPath());
+        sb.append(" ");
+        for (String file : files) {
+            sb.append(file);
+            sb.append(" ");
+        }
 
-		File[] fs = new File[files.length];
-		int i = 0;
-		for (String file : files) {
-			fs[i] = new File(dir + "/" + file);
-			if (fs[i].exists() == false) {
-				throw new RuntimeException("Not found the file in zip, file=[" + file + "].");
-			}
+        int exitCode;
+        try {
+            Process proc = Runtime.getRuntime().exec(sb.toString(), null, fDir);
+            exitCode = proc.waitFor();
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
 
-			i++;
-		}
+        if (exitCode != 0) {
+            throw new RuntimeException("Unzip file meet error, exitCode=[" + exitCode + "].");
+        }
 
-		return fs;
-	}
+        File[] fs = new File[files.length];
+        int i = 0;
+        for (String file : files) {
+            fs[i] = new File(dir + "/" + file);
+            if (fs[i].exists() == false) {
+                throw new RuntimeException("Not found the file in zip, file=[" + file + "].");
+            }
 
-	public static File[] unzipFile(File zipFile, String[] files) {
-		return unzipFile(zipFile, zipFile.getParent(), files);
-	}
+            i++;
+        }
+
+        return fs;
+    }
+
+    public static File[] unzipFile(File zipFile, String[] files) {
+        return unzipFile(zipFile, zipFile.getParent(), files);
+    }
 }

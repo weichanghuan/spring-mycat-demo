@@ -10,22 +10,22 @@
     <!--<ion-icon src="img/icon.svg"/>-->
     <!--<link rel="icon" href="/favicon.ico" type="image/x-icon" />-->
     <!--<ion-icon name="logo-sass"></ion-icon>-->
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
 </head>
 <body>
 ok
 <!--<script src="https://unpkg.com/ionicons@4.4.6/dist/ionicons.js"></script>-->
 
-<button  onclick="getLocation()" >获取地址</button>
+<button onclick="getLocation()">获取地址</button>
 
 <div class="elt">111</div>
 
 <script type="text/javascript">
 
-    window.onload=function(){
+    window.onload = function () {
 
-        if(navigator.geolocation) {
+        if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 function (position) {
                     var longitude = position.coords.longitude;
@@ -45,20 +45,17 @@ ok
     };
 
 
-
-
-
-
     window.navigator.geolocation.getCurrentPosition(function (position) {
         console.log(position.coords.latitude)
         console.log(position.coords.longitude)
     })
 
 
-
-    function getPosition () {
-        return new Promise((resolve, reject) => {
-            if (navigator.geolocation) {
+    function getPosition() {
+        return new Promise((resolve, reject) = > {
+            if(navigator.geolocation
+    )
+        {
             navigator.geolocation.getCurrentPosition(function (position) {
                 let latitude = position.coords.latitude
                 let longitude = position.coords.longitude
@@ -70,25 +67,25 @@ ok
             }, function () {
                 reject(arguments)
             })
-        } else {
+        }
+    else
+        {
             reject('你的浏览器不支持当前地理位置信息获取')
         }
     })
     }
 
 
-
-
-    function getLocation(){
-        if (navigator.geolocation){
-            navigator.geolocation.getCurrentPosition(showPosition,showError);
-        }else{
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
+        } else {
             alert("浏览器不支持地理定位。");
         }
     }
 
-    function showError(error){
-        switch(error.code) {
+    function showError(error) {
+        switch (error.code) {
             case error.PERMISSION_DENIED:
                 alert("定位失败,用户拒绝请求地理定位");
                 break;
@@ -107,10 +104,10 @@ ok
         }
     }
 
-    function showPosition(position){
+    function showPosition(position) {
         var lat = position.coords.latitude; //纬度
         var lag = position.coords.longitude; //经度
-        alert('纬度:'+lat+',经度:'+lag);
+        alert('纬度:' + lat + ',经度:' + lag);
     }
 
 </script>

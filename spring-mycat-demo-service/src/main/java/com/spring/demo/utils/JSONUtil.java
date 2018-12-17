@@ -10,9 +10,8 @@ import java.text.SimpleDateFormat;
 
 /**
  * Json转换工具类
- * 
- * @author 危常焕
  *
+ * @author 危常焕
  */
 public class JSONUtil {
 
@@ -23,9 +22,8 @@ public class JSONUtil {
 
     /**
      * 将对象转换为字符串,如果有时间对象，转换默认格式为yyyyMMddHHmmss
-     * 
-     * @param obj
-     *            要转换的对象
+     *
+     * @param obj 要转换的对象
      * @return
      */
     public static <T> String toJSonString(T obj) {
@@ -34,11 +32,9 @@ public class JSONUtil {
 
     /**
      * 将对象转换为字符串,如果有日期属性，且需要指点输出格式，可以按指点格式输出
-     * 
-     * @param obj
-     *            要转换的对象
-     * @param dateFormat
-     *            格式字符串
+     *
+     * @param obj        要转换的对象
+     * @param dateFormat 格式字符串
      * @return
      */
     public static <T> String toJSonString(T obj, String dateFormat) {
@@ -57,7 +53,7 @@ public class JSONUtil {
 
     /**
      * 将json字符串转换为指点对象
-     * 
+     *
      * @param json
      * @param clazz
      * @return
@@ -68,7 +64,7 @@ public class JSONUtil {
 
     /**
      * 将json字符串转换为指点对象,指点json中 日期字段格式
-     * 
+     *
      * @param json
      * @param clazz
      * @param dateFormat

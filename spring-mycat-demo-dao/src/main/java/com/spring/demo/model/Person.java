@@ -14,6 +14,7 @@ public class Person implements Serializable {
     private String name;
 
     private Integer age;
+
     @XmlAttribute
     public Long getId() {
         return id;
@@ -22,6 +23,7 @@ public class Person implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
     @XmlElement
     public String getName() {
         return name;
@@ -30,6 +32,7 @@ public class Person implements Serializable {
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
     }
+
     @XmlElement
     public Integer getAge() {
         return age;

@@ -34,11 +34,11 @@ public class First {
                 //判断是否是最后一位
                 x = x / 10;//降位
                 result = result * 10 + n;
-                if (result > Integer.MAX_VALUE ) {
+                if (result > Integer.MAX_VALUE) {
                     return 0;
                 }
                 if (x == 0) {
-                    return (int)result;
+                    return (int) result;
                 }
             }
         }
@@ -50,11 +50,11 @@ public class First {
                 x = x / 10;//降位
                 result = result * 10 + n;
 
-                if (result <Integer.MIN_VALUE ) {
+                if (result < Integer.MIN_VALUE) {
                     return 0;
                 }
                 if (x == 0) {
-                    return (int)result ;
+                    return (int) result;
                 }
 
 

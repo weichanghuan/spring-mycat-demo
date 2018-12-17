@@ -4,42 +4,42 @@ package com.base.localcache.model;
  * 对象持有类。
  */
 public class ObjectHolder {
-	/**
-	 * 对象版本
-	 */
-	private String objectVersion;
+    /**
+     * 对象版本
+     */
+    private String objectVersion;
 
-	/**
-	 * 对象checksum,用于版本判断
-	 */
-	private String objectChecksum;
+    /**
+     * 对象checksum,用于版本判断
+     */
+    private String objectChecksum;
 
-	/**
-	 * 对象
-	 */
-	private Object object;
+    /**
+     * 对象
+     */
+    private Object object;
 
-	public String getObjectVersion() {
-		return objectVersion;
-	}
+    public String getObjectVersion() {
+        return objectVersion;
+    }
 
-	public void setObjectVersion(String objectVersion) {
-		this.objectVersion = objectVersion;
-	}
+    public void setObjectVersion(String objectVersion) {
+        this.objectVersion = objectVersion;
+    }
 
-	public Object getObject() {
-		return object;
-	}
+    public Object getObject() {
+        return object;
+    }
 
-	public void setObject(Object object) {
-		this.object = object;
-	}
+    public void setObject(Object object) {
+        this.object = object;
+    }
 
-	public String getObjectChecksum() {
-		return objectChecksum;
-	}
+    public String getObjectChecksum() {
+        return objectChecksum;
+    }
 
-	public void setObjectChecksum(String objectChecksum) {
-		this.objectChecksum = objectChecksum;
-	}
+    public void setObjectChecksum(String objectChecksum) {
+        this.objectChecksum = objectChecksum;
+    }
 }

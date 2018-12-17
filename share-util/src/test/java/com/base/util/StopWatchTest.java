@@ -7,84 +7,82 @@ import org.junit.Test;
 
 /**
  * 秒表测试类
- * 
- *
  */
 public class StopWatchTest {
 
-	@Test
-	public void test() {
-		StopWatch stopWatch = new StopWatch();
-		Assert.assertEquals(-1, stopWatch.getStartTime());
-		Assert.assertEquals(-1, stopWatch.getStopTime());
-		Assert.assertEquals(-1, stopWatch.getLastMarkTime());
+    @Test
+    public void test() {
+        StopWatch stopWatch = new StopWatch();
+        Assert.assertEquals(-1, stopWatch.getStartTime());
+        Assert.assertEquals(-1, stopWatch.getStopTime());
+        Assert.assertEquals(-1, stopWatch.getLastMarkTime());
 
-		// 1
-		int i = 10;
-		while (i-- > 0) {
-			Assert.assertFalse(stopWatch.isRunning());
+        // 1
+        int i = 10;
+        while (i-- > 0) {
+            Assert.assertFalse(stopWatch.isRunning());
 
-			long startTime = stopWatch.start();
-			Assert.assertTrue(System.currentTimeMillis() - startTime <= 5);
-			Assert.assertEquals(startTime, stopWatch.getStartTime());
-			Assert.assertTrue(stopWatch.isRunning());
+            long startTime = stopWatch.start();
+            Assert.assertTrue(System.currentTimeMillis() - startTime <= 5);
+            Assert.assertEquals(startTime, stopWatch.getStartTime());
+            Assert.assertTrue(stopWatch.isRunning());
 
-			randomSleep();
+            randomSleep();
 
-			long markDuration = stopWatch.mark();
-			long markTime1 = stopWatch.getLastMarkTime();
-			Assert.assertTrue(System.currentTimeMillis() - markTime1 <= 5);
-			Assert.assertEquals(markDuration, markTime1 - startTime);
+            long markDuration = stopWatch.mark();
+            long markTime1 = stopWatch.getLastMarkTime();
+            Assert.assertTrue(System.currentTimeMillis() - markTime1 <= 5);
+            Assert.assertEquals(markDuration, markTime1 - startTime);
 
-			randomSleep();
+            randomSleep();
 
-			markDuration = stopWatch.mark();
-			long markTime2 = stopWatch.getLastMarkTime();
-			Assert.assertTrue(System.currentTimeMillis() - markTime2 <= 5);
-			Assert.assertEquals(markDuration, markTime2 - markTime1);
-			
-			randomSleep();
-			
-			long runTime = stopWatch.getRunTime();
-			Assert.assertTrue(System.currentTimeMillis() - startTime - runTime <= 5);
+            markDuration = stopWatch.mark();
+            long markTime2 = stopWatch.getLastMarkTime();
+            Assert.assertTrue(System.currentTimeMillis() - markTime2 <= 5);
+            Assert.assertEquals(markDuration, markTime2 - markTime1);
 
-			randomSleep();
+            randomSleep();
 
-			long totalDuration = stopWatch.stop();
-			long stopTime = stopWatch.getStopTime();
-			Assert.assertTrue(System.currentTimeMillis() - stopTime <= 5);
-			Assert.assertEquals(totalDuration, stopTime - startTime);
-			Assert.assertFalse(stopWatch.isRunning());
-		}
+            long runTime = stopWatch.getRunTime();
+            Assert.assertTrue(System.currentTimeMillis() - startTime - runTime <= 5);
 
-		// 2
-		try {
-			stopWatch.mark(); // stopped
-			Assert.fail("Expect exception");
-		} catch (Exception e) {
-		}
+            randomSleep();
 
-		try {
-			stopWatch.stop(); // stopped
-			Assert.fail("Expect exception");
-		} catch (Exception e) {
-		}
+            long totalDuration = stopWatch.stop();
+            long stopTime = stopWatch.getStopTime();
+            Assert.assertTrue(System.currentTimeMillis() - stopTime <= 5);
+            Assert.assertEquals(totalDuration, stopTime - startTime);
+            Assert.assertFalse(stopWatch.isRunning());
+        }
 
-		stopWatch = StopWatch.startNew(); // create and start
-		Assert.assertTrue(System.currentTimeMillis() - stopWatch.getStartTime() <= 5);
-		Assert.assertTrue(stopWatch.isRunning());
+        // 2
+        try {
+            stopWatch.mark(); // stopped
+            Assert.fail("Expect exception");
+        } catch (Exception e) {
+        }
 
-		try {
-			stopWatch.start(); // already started
-			Assert.fail("Expect exception");
-		} catch (Exception e) {
-		}
-	}
+        try {
+            stopWatch.stop(); // stopped
+            Assert.fail("Expect exception");
+        } catch (Exception e) {
+        }
 
-	/**
-	 * 随机睡眠(5 - 100ms以内)
-	 */
-	private void randomSleep() {
-		SleepUtil.sleep(5 + new Random().nextInt(96));
-	}
+        stopWatch = StopWatch.startNew(); // create and start
+        Assert.assertTrue(System.currentTimeMillis() - stopWatch.getStartTime() <= 5);
+        Assert.assertTrue(stopWatch.isRunning());
+
+        try {
+            stopWatch.start(); // already started
+            Assert.fail("Expect exception");
+        } catch (Exception e) {
+        }
+    }
+
+    /**
+     * 随机睡眠(5 - 100ms以内)
+     */
+    private void randomSleep() {
+        SleepUtil.sleep(5 + new Random().nextInt(96));
+    }
 }

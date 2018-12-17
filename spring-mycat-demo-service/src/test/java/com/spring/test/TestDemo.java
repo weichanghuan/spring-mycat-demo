@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * Created by Administrator on 2018/8/1.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath*:applicationContext.xml" })
+@ContextConfiguration(locations = {"classpath*:applicationContext.xml"})
 public class TestDemo {
 
 

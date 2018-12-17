@@ -2,9 +2,6 @@ package com.base.util;
 
 /**
  * 周期描述类
- * 
- *
- *
  */
 public class Period {
     /**

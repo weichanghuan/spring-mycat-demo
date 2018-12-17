@@ -16,7 +16,6 @@ public class A1 {
         System.out.println(min);
 
 
-
         new Thread(() -> System.out.println("running")).start();
 
 
@@ -27,7 +26,7 @@ public class A1 {
         System.out.println(s1.charAt(0));
 
 
-        List<String> list=new ArrayList<>();
+        List<String> list = new ArrayList<>();
         list.add("1");
         list.add("2");
         list.add("3");
@@ -45,7 +44,6 @@ public class A1 {
 
         System.out.println("end");
     }
-
 
 
     /**

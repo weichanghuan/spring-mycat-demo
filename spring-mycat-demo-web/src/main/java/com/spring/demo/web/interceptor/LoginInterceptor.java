@@ -21,7 +21,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
      * 如果不在这个数组里面的请求 必须是登录用户才可以访问
      */
     private static String[] accessUrl = new String[]{
-            "/index.htm", "/code.htm", "/mobile.htm", "/index2.htm", "/login.htm","/chk.htm"
+            "/index.htm", "/code.htm", "/mobile.htm", "/index2.htm", "/login.htm", "/chk.htm"
     };
 
     /**
