@@ -35,8 +35,8 @@ public class SmsDemo {
     // static final String accessKeyId = "yourAccessKeyId";
     // static final String accessKeySecret = "yourAccessKeySecret";
 
-    static final String accessKeyId = "LTAIcQsUFmG7jiqf";
-    static final String accessKeySecret = "hC6RTmdaDgBfuklU5LQ6pvTo4kNJCM";
+    static final String accessKeyId = "";
+    static final String accessKeySecret = "";
 
 
     public static SendSmsResponse sendSms(String mobile, String code) throws ClientException {
