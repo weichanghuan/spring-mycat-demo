@@ -13,7 +13,7 @@
     <artifactId>spring-mycat-demo-web</artifactId>
 
     <properties>
-        <spring.version>4.3.5.RELEASE</spring.version>
+        <spring.version>6.0.0</spring.version>
         <aspectj.version>1.8.10</aspectj.version>
         <swagger.version>2.7.0</swagger.version>
     </properties>
